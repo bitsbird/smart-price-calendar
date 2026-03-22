@@ -1,5 +1,5 @@
 {
-	"name": "roompricegenie-frontend-coding-challenge",
+	"name": "smart-price-calendar",
 	"version": "1.0.0",
 	"main": "index.js",
 	"scripts": {
@@ -20,6 +20,7 @@
 		"date-fns": "^4.1.0",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
+		"react-error-boundary": "^6.1.1",
 		"vinxi": "^0.4.3"
 	},
 	"devDependencies": {
