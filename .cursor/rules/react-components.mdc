@@ -1,0 +1,129 @@
+---
+description: Standards for React components, ensuring usage of Tailwind CSS and TypeScript interfaces
+globs: client/**/*.tsx
+---
+
+# React Component Rules
+
+- **Component Structure**: Use functional components with `export function`. Avoid `export default`.
+- **Props**: Always define a `Props` interface. Use destructuring in the function signature.
+- **Styling**: Use Tailwind CSS utility classes. Avoid inline styles or CSS modules unless specified.
+- **Performance**: Use `useMemo` for heavy calculations and `useCallback` for functions passed to memoized children.
+
+### Example:
+```tsx
+interface ButtonProps {
+  label: string;
+  onClick: () => void;
+}
+
+export function Button({ label, onClick }: ButtonProps) {
+  return (
+    <button className="px-4 py-2 bg-blue-500 text-white" onClick={onClick}>
+      {label}
+    </button>
+  );
+}
+
+
+## React Patterns
+- **Functional components** with hooks
+- **Custom hooks** for reusable logic
+- **Context API** for global state
+- **Compound components** for complex UI
+- **Render props** and **children as function** patterns
+- **Higher-order components** when needed
+- **Error boundaries** for error handling
+- **Suspense** for loading states
+
+## TypeScript Guidelines
+- Define **interfaces** for component props and data structures
+- Use **generic types** for reusable components
+- Avoid 'any' type, use proper typing
+- Use **union types** for component variants
+- Implement **strict mode** configurations
+- Use **utility types** (Pick, Omit, Partial, etc.)
+
+## Performance Optimization
+- Use **React.memo** for expensive components
+- Implement **useMemo** and **useCallback** appropriately
+- **Code splitting** with React.lazy and Suspense
+- **Virtual scrolling** for large lists
+- **Image optimization** with lazy loading
+- **Bundle analysis** and optimization
+
+## Testing Strategy
+- **Unit tests** for utilities and custom hooks
+- **Component tests** with React Testing Library
+- **Integration tests** for user flows
+
+## Accessibility
+- Use **semantic HTML** elements
+- Implement **ARIA attributes** when needed
+- Ensure **keyboard navigation** support
+- Provide **screen reader** compatibility
+- Follow **WCAG 2.1 AA** guidelines
+- Test with **accessibility tools**
+
+## State Management
+- **Local state** with useState and useReducer
+- **Global state** with Context API
+- **Server state** with TanStack Query
+- **Form state** with React Hook Form
+- **URL state** with React Router
+
+## TanStack Query Guidelines
+- Use **TanStack Query** for all server state
+- **Query keys** should be arrays with hierarchical structure
+- Use **query invalidation** for cache updates
+- Implement **optimistic updates** with useMutation
+- Use **infinite queries** for pagination
+- **Prefetch data** for better UX
+- Handle **loading and error states** properly
+- Use **query client** for global configuration
+
+## Component Architecture
+- **Feature-based** principles
+- **Composition over inheritance**
+- **Single responsibility** principle
+- **Prop drilling** avoidance
+- **Reusable** and **configurable** components
+
+## Security Best Practices
+- **Input validation** on both client and server
+- **Sanitize user input** to prevent XSS attacks
+- **Use HTTPS** for all API communications
+- **Implement CSRF protection** for forms
+- **Validate file uploads** (type, size, content)
+- **Use environment variables** for sensitive data
+- **Implement proper authentication** and authorization
+- **Use Content Security Policy (CSP)** headers
+- **Avoid exposing sensitive data** in client-side code
+- **Use secure cookies** with proper flags
+
+## Error Handling
+- **Error boundaries** for catching component errors
+- **Try-catch blocks** for async operations
+- **Custom error classes** for different error types
+- **Error logging** with proper context
+- **User-friendly error messages** (no technical details)
+- **Fallback UI** for error states
+- **Retry mechanisms** for failed requests
+- **Global error handler** for unhandled errors
+- **Validation errors** with field-specific messages
+- **Network error handling** with offline detection
+
+## Loading States
+- **Skeleton screens** for better perceived performance
+- **Loading spinners** for quick operations
+- **Progress indicators** for long-running tasks
+- **Suspense boundaries** for code splitting
+- **Optimistic updates** for better UX
+- **Stale-while-revalidate** patterns
+- **Loading states** in forms and buttons
+- **Lazy loading** for images and components
+- **Preloading** critical resources
+- **Loading priorities** (above-fold first)
+
+**Reference**
+Refer to React official documentation and modern React patterns for best practices.

@@ -1,0 +1,33 @@
+---
+alwaysApply: true
+
+description: Rules for writing and running tests using Vitest and React Testing Library
+globs: **/*.test.ts, **/*.test.tsx, src/tests/**/*
+---
+
+# Testing Protocol
+
+- **Framework**: Use Vitest for unit tests and Playwright for E2E tests.
+- **Pattern**: Follow the **Arrange-Act-Assert** pattern.
+- **Mocking**: Use `vi.mock()` for external API calls. Never make real network requests in unit tests.
+- **Naming**: Test files must match the source file name: `ComponentName.test.tsx`.
+
+## Agentic Instructions
+1. **TDD Workflow**: When asked to build a feature, write the test file *first* to define the expected behavior.
+2. **Self-Correction**: If a test fails, read the terminal output, identify the failure, and attempt to fix the implementation.
+3. **Coverage**: Every new utility function must have at least one edge-case test (e.g., null inputs, empty strings).
+
+# Vinxi + Vitest Context
+- We are using Vinxi. When testing components that use 'vinxi/client' or 'vinxi/server', ensure mocks are provided for the Vinxi router.
+- Use `jsdom` as the test environment.
+- Run tests using `npx vitest`.
+
+## Example Snippet
+```typescript
+import { describe, it, expect } from 'vitest';
+
+describe('Utility Name', () => {
+  it('should handle X when Y is provided', () => {
+    // Arrange, Act, Assert logic
+  });
+});

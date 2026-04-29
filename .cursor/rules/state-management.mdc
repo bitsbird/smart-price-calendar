@@ -1,0 +1,10 @@
+---
+description: Logic for data fetching and global state
+globs: client/hooks/**/*.ts
+---
+
+# State & Data Rules
+
+- **Data Fetching**: Use `@TanStack/React-Query`. Never use `useEffect` for fetching data.
+- **Global State**: Use react `Context` for client-side state.
+- **Mutations**: Always provide an `onSuccess` callback to invalidate relevant queries.
