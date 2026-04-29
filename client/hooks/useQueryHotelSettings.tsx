@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getSettings } from "./api";
+import { getSettings } from "../utils/api";
 
 export const useQueryHotelSettings = () => {
 	const { data: settings } = useSuspenseQuery({

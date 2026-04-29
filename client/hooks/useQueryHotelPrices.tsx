@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getPrices } from "./api";
+import { getPrices } from "../utils/api";
 
 export const useQueryHotelPrices = () => {
 	const { data: priceData } = useSuspenseQuery({

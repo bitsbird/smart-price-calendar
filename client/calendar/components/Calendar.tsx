@@ -1,8 +1,8 @@
 import { Box, Text } from "@mantine/core";
 import { useMemo, useState } from "react";
 import { loadDateLocale } from "../../utils/loadDateLocale";
-import { useQueryHotelPrices } from "../../utils/useQueryHotelPrices";
-import { useQueryHotelSettings } from "../../utils/useQueryHotelSettings";
+import { useQueryHotelPrices } from "../../hooks/useQueryHotelPrices";
+import { useQueryHotelSettings } from "../../hooks/useQueryHotelSettings";
 import { useSettings } from "../SettingsContext";
 import type { CalendarDay, CalendarDayRoom, CalendarMonthYear } from "../types";
 import {
