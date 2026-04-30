@@ -13,8 +13,14 @@ interface Props {
 }
 
 export const CalendarGrid: React.FC<Props> = ({ calendarDays }) => {
-	const { dateTZ } = calendarDays.at(0);
-	const expiredColumns = createExpiredDaysColumns(dateTZ);
+	if (!calendarDays.length || calendarDays.length === 0) {
+		return (
+			<div className="grid grid-cols-1 lg:grid-cols-7 border-l border-t border-gray-300" />
+		);
+	}
+
+	const firstDay = calendarDays.at(0);
+	const expiredColumns = createExpiredDaysColumns(firstDay.dateTZ);
 	const priceColumns: CalendarGridPriceColumn[] = calendarDays.map(
 		(calendarDay) => {
 			return {
@@ -24,7 +30,7 @@ export const CalendarGrid: React.FC<Props> = ({ calendarDays }) => {
 			};
 		},
 	);
-	const blankColums = createEmptyDaysColumns(dateTZ);
+	const blankColums = createEmptyDaysColumns(firstDay.dateTZ);
 	const gridColumns: CalendarGridColumn[] = [
 		...expiredColumns,
 		...priceColumns,

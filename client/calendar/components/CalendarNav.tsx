@@ -1,12 +1,12 @@
 import { Box, Select } from "@mantine/core";
 import { ActionIcon } from "@mantine/core";
 import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
-import type { CalendarMonthOption } from "../types";
+import type { CalendarMonthOption, CalendarMonthYear } from "../types";
 
 interface Props {
 	optionMonths: CalendarMonthOption[];
-	onChangeMonth: (month: string) => void;
-	selectedMonth: string;
+	onChangeMonth: (month: CalendarMonthYear) => void;
+	selectedMonth: CalendarMonthYear | null;
 }
 
 export const CalendarNav: React.FC<Props> = ({
@@ -20,7 +20,10 @@ export const CalendarNav: React.FC<Props> = ({
 		);
 		const isLast = index === optionMonths.length - 1;
 		if (!isLast) {
-			onChangeMonth(optionMonths.at(index + 1).value);
+			const nextMonth = optionMonths.at(index + 1)?.value;
+			if (nextMonth) {
+				onChangeMonth(nextMonth);
+			}
 		}
 	};
 
@@ -30,7 +33,10 @@ export const CalendarNav: React.FC<Props> = ({
 		);
 		const isFirst = index === 0;
 		if (!isFirst) {
-			onChangeMonth(optionMonths.at(index - 1).value);
+			const prevMonth = optionMonths.at(index - 1)?.value;
+			if (prevMonth) {
+				onChangeMonth(prevMonth);
+			}
 		}
 	};
 	return (
@@ -41,7 +47,11 @@ export const CalendarNav: React.FC<Props> = ({
 			<Select
 				data={optionMonths}
 				value={selectedMonth}
-				onChange={(_value) => onChangeMonth(_value)}
+				onChange={(_value) => {
+					if (_value) {
+						onChangeMonth(_value as CalendarMonthYear);
+					}
+				}}
 				className="w-48"
 			/>
 

@@ -19,8 +19,8 @@ export type CalendarMonthYear =
 
 export interface RoomPrices {
 	id: string;
-	price?: number;
-	pricePMS?: number;
+	price: number | null;
+	pricePMS: number | null;
 	isError: boolean;
 	errorReason?: string;
 }

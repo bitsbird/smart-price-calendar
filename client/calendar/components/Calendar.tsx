@@ -1,5 +1,5 @@
 import { Box, Text } from "@mantine/core";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { loadDateLocale } from "../../utils/loadDateLocale";
 import { useQueryHotelPrices } from "../../hooks/useQueryHotelPrices";
 import { useQueryHotelSettings } from "../../hooks/useQueryHotelSettings";
@@ -20,8 +20,14 @@ const Calendar = () => {
 	const { settings } = useQueryHotelSettings();
 	const dateLocale = loadDateLocale(settings.hotel.locale);
 	const { setLocale, setCurrencyCode } = useSettings();
-	setLocale(dateLocale);
-	setCurrencyCode(priceData.currency.code);
+
+	useEffect(() => {
+		setLocale(dateLocale);
+	}, [dateLocale, setLocale]);
+
+	useEffect(() => {
+		setCurrencyCode(priceData.currency.code);
+	}, [priceData.currency.code, setCurrencyCode]);
 	const calendarDays = useMemo(() => {
 		return toCalendarDays(priceData, settings, dateLocale);
 	}, [priceData, settings, dateLocale]);
@@ -31,23 +37,33 @@ const Calendar = () => {
 	const [selectedRoomType, setSelectedRoomType] = useState<string | null>(null);
 
 	const calendarMonthOptions = useMemo(() => {
-		const options = buildCalendarMonthOptions(calendarDays, dateLocale);
-		const defaultMonth = options[0].value;
-		setSelectedMonth(defaultMonth);
-		return options;
+		return buildCalendarMonthOptions(calendarDays, dateLocale);
 	}, [calendarDays, dateLocale]);
 
 	const roomTypeOptions = useMemo(() => {
 		const roomTypes = toRoomTypes(settings.rooms);
-		const options = roomTypes.map((roomType) => {
+		return roomTypes.map((roomType) => {
 			return { label: roomType.name, value: roomType.id };
 		});
-		const defaultSelected = roomTypes.find(
-			(roomType) => roomType.type === "reference",
-		);
-		setSelectedRoomType(defaultSelected.id);
-		return options;
 	}, [settings.rooms]);
+
+	const defaultMonth = calendarMonthOptions.at(0)?.value ?? null;
+	const defaultSelectedRoomType = useMemo(() => {
+		const roomTypes = toRoomTypes(settings.rooms);
+		return roomTypes.find((roomType) => roomType.type === "reference")?.id ?? null;
+	}, [settings.rooms]);
+
+	useEffect(() => {
+		if (!selectedMonth && defaultMonth) {
+			setSelectedMonth(defaultMonth);
+		}
+	}, [selectedMonth, defaultMonth]);
+
+	useEffect(() => {
+		if (!selectedRoomType && defaultSelectedRoomType) {
+			setSelectedRoomType(defaultSelectedRoomType);
+		}
+	}, [selectedRoomType, defaultSelectedRoomType]);
 
 	const onChangeRoomType = (roomType: string) => {
 		setSelectedRoomType(roomType);
@@ -64,7 +80,7 @@ const Calendar = () => {
 	}, [calendarDays, selectedMonth]);
 
 	const filteredCalendarDays: CalendarDayRoom[] | null = useMemo(() => {
-		if (!selectedMonthCalendarDays || !selectedRoomType) return;
+		if (!selectedMonthCalendarDays || !selectedRoomType) return null;
 		const filtered = selectedMonthCalendarDays.map((calendarDay) => {
 			const room = calendarDay.rooms.find(
 				(room) => room.id === selectedRoomType,
@@ -101,7 +117,7 @@ const Calendar = () => {
 				</Box>
 			</Box>
 			<div>
-				<CalendarGrid calendarDays={filteredCalendarDays} />
+				<CalendarGrid calendarDays={filteredCalendarDays ?? []} />
 			</div>
 		</div>
 	);

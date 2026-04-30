@@ -39,4 +39,10 @@ describe('CalendarGrid', () => {
     expect(items[1].textContent).toContain('price:2026-04-15');
     expect(items[2]).toHaveTextContent('blank:blank-1');
   });
+
+  it('renders no grid items when calendar days are empty', () => {
+    render(<CalendarGrid calendarDays={[]} />);
+
+    expect(screen.queryByTestId('grid-item')).not.toBeInTheDocument();
+  });
 });

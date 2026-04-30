@@ -62,6 +62,8 @@ describe('CalendarGridItem', () => {
         yearTZ: 2026,
         room: {
           id: '1',
+          price: null,
+          pricePMS: null,
           isError: true,
           errorReason: ErrorReason.NoMarketData,
         },
